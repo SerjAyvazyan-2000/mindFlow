@@ -64,8 +64,8 @@
 }
 
 .footer-info .btn-black:hover{
-    opacity: .8;
-    background: var(--black);
+    background: var(--white);
+    color: var(--black);
 }
 .footer.animate .footer-info-bg {
     opacity: 1;

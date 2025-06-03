@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         header.classList.add('active');
         menuBg.classList.add('active');
         headerBody.classList.add('active');
+        document.body.style.overflow = 'hidden';
 
 
     }
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         header.classList.remove('active');
         menuBg.classList.remove('active');
         headerBody.classList.remove('active');
+        document.body.style.overflow = 'unset';
 
     }
 
