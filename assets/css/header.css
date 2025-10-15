@@ -79,9 +79,7 @@ header.moved .header-body {
 }
 
 @media (max-width: 576px) {
-  .header-actions {
-    display: none;
-  }
+
   .header-mobile-actions {
     display: flex;
     align-items: center;
@@ -120,5 +118,20 @@ header.moved .header-body {
 }
 header.moved .header-body{
   padding: 12px;
+}
+
+.btn-login {
+  padding: 11px 12px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.btn-register {
+  padding: 11px 12px;
+  font-size: 14px;
+  line-height: 18px;
+}
+.header-body{
+  gap: 10px;
 }
 }
