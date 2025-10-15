@@ -163,7 +163,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    font-family: 'SF Pro Text',sans-serif;
-    background: var(--white2);
+    font-family: 'Inter',sans-serif;
+    background: var(--bg-color);
 
 }

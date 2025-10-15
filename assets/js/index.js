@@ -1,57 +1,8 @@
-const burger = document.querySelector('.burger');
-const menu = document.querySelector('.menu');
 const header = document.querySelector('header');
-const menuBg = document.querySelector('.menu-bg');
-const headerBody = document.querySelector('.header-body');
-const menuLinks = document.querySelectorAll('.menu-link');
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-    burger.addEventListener("click", function (e) {
-        if (menu.classList.contains('active')) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-    });
-    menuBg.addEventListener("click", function (e) {
-        if (menu.classList.contains('active')) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-    });
 
-    function openMenu() {
-        menu.classList.add('active');
-        burger.classList.add('active');
-        header.classList.add('active');
-        menuBg.classList.add('active');
-        headerBody.classList.add('active');
-        document.body.style.overflow = 'hidden';
-
-
-    }
-
-    menuLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            closeMenu();
-        });
-    });
-
-    function closeMenu() {
-        menu.classList.remove('active');
-        burger.classList.remove('active');
-        header.classList.remove('active');
-        menuBg.classList.remove('active');
-        headerBody.classList.remove('active');
-        document.body.style.overflow = 'unset';
-
-    }
-
-
-});
 
 window.addEventListener('scroll', function () {
     const headerTop = document.querySelector('header')
@@ -67,108 +18,78 @@ window.addEventListener('scroll', function () {
 });
 
 
-function toggleActiveState(item) {
-    const allItems = document.querySelectorAll('.faq-item-block');
+const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    allItems.forEach(otherItem => {
-        if (otherItem !== item) {
-            otherItem.classList.remove('active');
-        }
-    });
+const savedTheme = localStorage.getItem("theme");
 
-    item.classList.toggle('active');
+if (savedTheme) {
+  document.documentElement.setAttribute("data-theme", savedTheme);
+} else {
+  document.documentElement.setAttribute("data-theme", prefersDark ? "dark" : "light");
 }
 
-document.querySelectorAll('.faq-item-block').forEach(item => {
-    item.addEventListener('click', () => toggleActiveState(item));
-    const icon = item.querySelector('.faq-item-icon');
-    icon.addEventListener('click', (event) => {
-        event.stopPropagation();
-        toggleActiveState(item);
+
+
+
+function updateImages(theme) {
+  const images = document.querySelectorAll("img[data-light][data-dark]");
+  images.forEach(img => {
+    const newSrc = theme === "dark" ? img.dataset.dark : img.dataset.light;
+    img.src = newSrc;
+  });
+}
+
+
+
+const initialTheme = document.documentElement.getAttribute("data-theme");
+updateImages(initialTheme);
+
+const themeToggle = document.getElementById("theme-toggle");
+
+themeToggle.addEventListener("click", () => {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  const newTheme = currentTheme === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme);
+    updateImages(newTheme);
+
+});
+
+
+const parallaxBlocks = document.querySelectorAll(".parallax-anim");
+
+if (parallaxBlocks.length > 0) {
+  let mouseX = 0, mouseY = 0;
+  let scrollY = window.scrollY;
+
+  document.addEventListener("mousemove", (e) => {
+    const targetX = (e.clientX / window.innerWidth - 0.5) * 6; 
+    const targetY = (e.clientY / window.innerHeight - 0.5) * 3; 
+    mouseX = targetX;
+    mouseY = targetY;
+  });
+
+  window.addEventListener("scroll", () => {
+    scrollY = window.scrollY;
+    applyParallax();
+  });
+
+  function applyParallax() {
+    parallaxBlocks.forEach((block) => {
+      const img = block.querySelector("img");
+      const rect = block.getBoundingClientRect();
+
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        const scrollOffset = rect.top * -0.1; 
+        img.style.transform = `translate(${mouseX}px, ${scrollOffset}px)`;
+      }
     });
-});
+  }
 
+  function loop() {
+    applyParallax();
+    requestAnimationFrame(loop);
+  }
 
-
-
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-
-
-    const header = document.querySelector('.header');
-
-    const observer = new IntersectionObserver(
-        ([entry]) => {
-            if (entry.isIntersecting) {
-                header.classList.add('visible');
-                observer.unobserve(header);
-            }
-        },
-        {
-            threshold: 0.1,
-        }
-    );
-
-    observer.observe(header);
-
-
-
-});
-
-
-
-
-document.querySelectorAll('.menu-link').forEach(link => {
-    link.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-            const headerHeight = document.querySelector('header').offsetHeight + 20;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
-
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-document.querySelectorAll('.footer-menu ul li a').forEach(link => {
-    link.addEventListener('click', function (e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-            const headerHeight = document.querySelector('header').offsetHeight + 20;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
-
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('.animate-section');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    sections.forEach(section => observer.observe(section));
-});
+  loop();
+}

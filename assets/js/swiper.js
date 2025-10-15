@@ -1,42 +1,47 @@
 
 
 
-const swiper = new Swiper('.opportunities-swiper', {
+const swiper = new Swiper('.possibilities-swiper', {
     spaceBetween: 20,
-    loop:true,
+
+  slidesPerView: 1,
+  loop: true,
+loopedSlides: 5,
+loopAdditionalSlides: 3,
+observer: true,
+observeParents: true,
 
     pagination: {
-        el: '.opportunities-pagination',
+        el: '.possibilities-swiper-pagination',
         clickable: true,
     },
 
-    navigation: {
-        nextEl: '.opportunities-next',
-        prevEl: '.opportunities-prev',
-    },
+   navigation: {
+  nextEl: '.possibilities-arrows .swiper-button-next',
+  prevEl: '.possibilities-arrows .swiper-button-prev',
+},
     breakpoints: {
         320: { slidesPerView: 1 },
         490: { slidesPerView: 1.2 },
         620: { slidesPerView: 1.5 },
         810: { slidesPerView: 2 },
-        992: { slidesPerView: 2 },
-        1263: { slidesPerView: 2.5 },
-        1300: { slidesPerView: 3 },
+        992: { slidesPerView: 1 },
+        1263: { slidesPerView: 1 },
+        1300: { slidesPerView: 1 },
     },
 
 
 });
-const reviewsSwiper = new Swiper('.reviews-swiper', {
+
+const workSwiper = new Swiper('.work-process-swiper', {
     spaceBetween: 20,
-    slidesPerView:1,
     loop:true,
+    slidesPerView:1,
 
-
-    navigation: {
-        nextEl: '.reviews-next',
-        prevEl: '.reviews-prev',
+    pagination: {
+        el: '.work-swiper-pagination',
+        clickable: true,
     },
-
 
 
 });
